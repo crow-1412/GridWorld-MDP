@@ -2,11 +2,11 @@ import numpy as np
 import random
 
 class GridWorld:
-    def __init__(self, rows=5, cols=5,
-                 A=(0, 0), A_prime=(4, 0), rA=10,
-                 B=(0, 1), B_prime=(4, 1), rB=5,
-                 C=(0, 2), C_prime=(4, 2), rC=3,
-                 step_cost=-3):
+    def __init__(self, rows=8, cols=8,
+                    A=(0, 1), A_prime=(7, 1), rA=10,
+                    B=(0, 3), B_prime=(4, 3), rB=5,
+                    C=(0, 5), C_prime=(2, 5), rC=3,
+                    step_cost=-1):
         """
         rows, cols: 网格大小
         A, A_prime: 特殊位置 A 及其目标 A'
@@ -266,16 +266,14 @@ if __name__ == "__main__":
         # 值迭代
         V_vi, pi_vi, vi_iter = value_iteration(env, gamma=gamma, theta=1e-5)
         print(f"[Value Iteration] Converged in {vi_iter} iterations.")
-        # print_value_function(V_vi, env) # 可选：打印价值函数
-        # print_policy(pi_vi, env)       # 可选：打印策略
+        print_policy(pi_vi, env)
+        print_value_function(V_vi, env)
         
         # 策略迭代
-        # (The local redefinitions and related comments below are redundant and will be removed)
-
-        # 运行策略迭代 (This will use the global policy_iteration and policy_improvement)
         pi_pi, V_pi, pi_iter = policy_iteration(env, gamma=gamma)
         print(f"[Policy Iteration] Stabilized in {pi_iter} policy improvement steps.")
-        # print_value_function(V_pi, env) # 可选：打印价值函数
+        print_policy(pi_pi, env)
+        print_value_function(V_pi, env)
 
         results[gamma] = {'VI_iters': vi_iter, 'PI_iters': pi_iter}
 
